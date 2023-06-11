@@ -1,5 +1,12 @@
+// import {Router,Routes,}
+import Login from "./pages/Login";
+
 function App() {
-  return <div></div>;
+  return (
+    <main className="App">
+      <Login />
+    </main>
+  );
 }
 
 export default App;
