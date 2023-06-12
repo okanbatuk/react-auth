@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 import api from "../libs/api";
 
-export default ({ setSuccess, setErr }) => {
+export default ({ setSuccess, setErr, errRef }) => {
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
 
@@ -14,7 +14,7 @@ export default ({ setSuccess, setErr }) => {
   }, []);
 
   useEffect(() => {
-    setErr("");
+    (email || password) && setErr("");
   }, [email, password]);
 
   const login = async (email, password) => {
@@ -23,7 +23,6 @@ export default ({ setSuccess, setErr }) => {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      console.log(data);
       const { user, accessToken } = data?.data;
       setAuth({
         email: user.email,
@@ -32,11 +31,10 @@ export default ({ setSuccess, setErr }) => {
       });
       setSuccess(true);
     } catch (err) {
-      console.log("ERROR");
-      console.log(err?.response.statusText);
       !err?.response
         ? setErr("There is No Server Response")
-        : setErr(err.response.statusText);
+        : setErr(err.response.data.message);
+      errRef.current.focus();
     } finally {
       setEmail("");
       setPassword("");
@@ -72,7 +70,6 @@ export default ({ setSuccess, setErr }) => {
       <p>
         Need an Account <br />
         <span className="line">
-          {}
           <a href="#">Sign Up</a>
         </span>
       </p>

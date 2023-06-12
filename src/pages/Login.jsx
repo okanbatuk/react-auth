@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import "../assets/loginForm.css";
+import React, { useRef, useState } from "react";
 import Form from "../components/loginForm";
+import "../assets/loginForm.css";
 
 export default () => {
+  const errRef = useRef();
   const [success, setSuccess] = useState(false);
   const [err, setErr] = useState("");
 
@@ -18,10 +19,14 @@ export default () => {
         </section>
       ) : (
         <section>
-          <p className={err ? "errmsg" : "offscreen"} aria-live="assertive">
+          <p
+            className={err ? "errmsg" : "offscreen"}
+            ref={errRef}
+            aria-live="assertive"
+          >
             {err}
           </p>
-          <Form setSuccess={setSuccess} setErr={setErr} />
+          <Form setSuccess={setSuccess} setErr={setErr} errRef={errRef} />
         </section>
       )}
     </>
