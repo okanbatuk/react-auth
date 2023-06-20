@@ -63,7 +63,6 @@ export default ({ setSuccess, setError, errRef }) => {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      console.log(response.data);
       setSuccess(true);
     } catch (err) {
       !err?.response
@@ -88,10 +87,7 @@ export default ({ setSuccess, setError, errRef }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {/*
-       *
-       * First Name section
-       *  */}
+      {/* First Name Section */}
       <label htmlFor="firstName">
         First Name:
         <FontAwesomeIcon
@@ -128,11 +124,7 @@ export default ({ setSuccess, setError, errRef }) => {
         Must begin with a letter.
       </p>
 
-      {/*
-       *
-       * Last Name section
-       *  */}
-
+      {/* Last Name Section */}
       <label htmlFor="lastName">
         Last Name:
         <FontAwesomeIcon
@@ -168,11 +160,7 @@ export default ({ setSuccess, setError, errRef }) => {
         Must begin with a letter.
       </p>
 
-      {/*
-       *
-       * Email Section
-       */}
-
+      {/* Email Section */}
       <label htmlFor="email">
         Email:
         <FontAwesomeIcon
@@ -204,11 +192,7 @@ export default ({ setSuccess, setError, errRef }) => {
         Must be a valid email.
       </p>
 
-      {/*
-       *
-       * Password Section
-       */}
-
+      {/* Password Section */}
       <label htmlFor="password">
         Password:
         <FontAwesomeIcon
@@ -249,11 +233,7 @@ export default ({ setSuccess, setError, errRef }) => {
         <span aria-label="percent">%</span>
       </p>
 
-      {/*
-       *
-       * Conf Password Section
-       */}
-
+      {/* Confirm Password Section */}
       <label htmlFor="confirm_pwd">
         Confirm Password:
         <FontAwesomeIcon

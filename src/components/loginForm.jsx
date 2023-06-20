@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 import api from "../libs/api";
+import { useNavigate } from "react-router-dom";
 
 export default ({ setSuccess, setErr, errRef }) => {
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,6 +32,7 @@ export default ({ setSuccess, setErr, errRef }) => {
         accessToken,
       });
       setSuccess(true);
+      navigate("/");
     } catch (err) {
       !err?.response
         ? setErr("There is No Server Response")
@@ -67,12 +70,6 @@ export default ({ setSuccess, setErr, errRef }) => {
         required
       />
       <button type="submit">Sign In</button>
-      <p>
-        Need an Account <br />
-        <span className="line">
-          <a href="#">Sign Up</a>
-        </span>
-      </p>
     </form>
   );
 };
