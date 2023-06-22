@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   faCheck,
   faTimes,
@@ -13,8 +14,10 @@ const MAIL_REGEX =
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$/;
 const REGISTER_URL = "/register";
 
-export default ({ setSuccess, setError, errRef }) => {
+export default ({ setError, errRef }) => {
   const nameRef = useRef();
+  const navigate = useNavigate();
+  const from = "/login";
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -54,16 +57,21 @@ export default ({ setSuccess, setError, errRef }) => {
   }, [password, matchPass]);
 
   useEffect(() => {
-    firstName || lastName || email || password || matchPass || setError("");
+    (firstName || lastName || email || password || matchPass) && setError("");
   }, [firstName, lastName, email, password, matchPass]);
 
   const register = async (userInfo) => {
     try {
-      const response = await api.post(REGISTER_URL, userInfo, {
+      await api.post(REGISTER_URL, userInfo, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      setSuccess(true);
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setMatchPass("");
+      navigate(from, { replace: true });
     } catch (err) {
       !err?.response
         ? setError("There is No Server Response")
@@ -104,11 +112,11 @@ export default ({ setSuccess, setError, errRef }) => {
         id="firstName"
         ref={nameRef}
         autoComplete="off"
+        required
         value={firstName}
         onChange={(e) => {
           e.target.value.length < 24 && setFirstName(e.target.value);
         }}
-        required
         aria-invalid={validName ? "false" : "true"}
         aria-describedby="nameNote"
         onFocus={() => setNameFocus(true)}
@@ -140,11 +148,11 @@ export default ({ setSuccess, setError, errRef }) => {
         type="text"
         id="lastName"
         autoComplete="off"
+        required
         value={lastName}
         onChange={(e) => {
           e.target.value.length < 24 && setLastName(e.target.value);
         }}
-        required
         aria-invalid={validSurname ? "false" : "true"}
         aria-describedby="surnameNote"
         onFocus={() => setSurnameFocus(true)}
@@ -176,9 +184,9 @@ export default ({ setSuccess, setError, errRef }) => {
         type="text"
         id="email"
         autoComplete="off"
+        required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        required
         aria-invalid={validMail ? "false" : "true"}
         aria-describedby="uidnote"
         onFocus={() => setMailFocus(true)}
@@ -207,9 +215,9 @@ export default ({ setSuccess, setError, errRef }) => {
       <input
         type="password"
         id="password"
+        required
         onChange={(e) => setPassword(e.target.value)}
         value={password}
-        required
         aria-invalid={validPass ? "false" : "true"}
         aria-describedby="pwdnote"
         onFocus={() => setPassFocus(true)}
@@ -248,9 +256,9 @@ export default ({ setSuccess, setError, errRef }) => {
       <input
         type="password"
         id="confirm_pwd"
+        required
         onChange={(e) => setMatchPass(e.target.value)}
         value={matchPass}
-        required
         aria-invalid={validMatch ? "false" : "true"}
         aria-describedby="confirmnote"
         onFocus={() => setMatchFocus(true)}

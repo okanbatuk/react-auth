@@ -1,12 +1,15 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import api from "../libs/api";
-import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
-export default ({ setSuccess, setErr, errRef }) => {
-  const { setAuth } = useContext(AuthContext);
+export default ({ setErr, errRef }) => {
+  const { setAuth } = useAuth();
   const userRef = useRef();
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,12 +30,14 @@ export default ({ setSuccess, setErr, errRef }) => {
       });
       const { user, accessToken } = data?.data;
       setAuth({
+        uuid: user.uuid,
         email: user.email,
         roles: user.role,
         accessToken,
       });
-      setSuccess(true);
-      navigate("/");
+      setEmail("");
+      setPassword("");
+      navigate(from, { replace: true });
     } catch (err) {
       !err?.response
         ? setErr("There is No Server Response")
@@ -50,7 +55,7 @@ export default ({ setSuccess, setErr, errRef }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <label htmlFor="email">Email:</label>
       <input
         id="email"
@@ -69,7 +74,9 @@ export default ({ setSuccess, setErr, errRef }) => {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button type="submit">Sign In</button>
+      <button type="submit" onClick={handleSubmit}>
+        Sign In
+      </button>
     </form>
   );
 };
