@@ -1,6 +1,9 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../context/AuthProvider";
+import api from "../libs/api";
+
+const LOGOUT_URL = "/logout";
 
 const Home = () => {
   const { setAuth } = useContext(AuthContext);
@@ -9,8 +12,16 @@ const Home = () => {
   const logout = async () => {
     // if used in more components, this should be in context
     // axios to /logout endpoint
-    setAuth({});
-    navigate("/linkpage");
+    try {
+      const response = await api.get(LOGOUT_URL);
+      console.log(response);
+      setAuth({});
+      navigate("/linkpage");
+    } catch (err) {
+      !err?.response
+        ? console.log("There is No Server Response")
+        : console.log(err.response.data.message);
+    }
   };
 
   return (
