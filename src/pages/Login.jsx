@@ -1,11 +1,16 @@
-import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Form from "../components/loginForm";
 import "../assets/loginForm.css";
 
 export default () => {
   const errRef = useRef();
+  const { state } = useLocation();
   const [err, setErr] = useState("");
+
+  useEffect(() => {
+    state?.message && setErr(state.message) && errRef.current.focus();
+  }, [state?.message]);
 
   return (
     <section>
