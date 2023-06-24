@@ -11,12 +11,10 @@ const Home = () => {
 
   const logout = async () => {
     // if used in more components, this should be in context
-    // axios to /logout endpoint
     try {
       const response = await api.get(LOGOUT_URL);
-      console.log(response);
       setAuth({});
-      navigate("/linkpage");
+      navigate("/linkpage", { state: { message: response.data.message } });
     } catch (err) {
       !err?.response
         ? console.log("There is No Server Response")

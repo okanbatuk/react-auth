@@ -17,7 +17,7 @@ const REGISTER_URL = "/register";
 export default ({ setError, errRef }) => {
   const nameRef = useRef();
   const navigate = useNavigate();
-  const from = "/login";
+  const from = "/linkpage";
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -62,7 +62,7 @@ export default ({ setError, errRef }) => {
 
   const register = async (userInfo) => {
     try {
-      await api.post(REGISTER_URL, userInfo, {
+      const response = await api.post(REGISTER_URL, userInfo, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
@@ -71,7 +71,12 @@ export default ({ setError, errRef }) => {
       setEmail("");
       setPassword("");
       setMatchPass("");
-      navigate(from, { replace: true });
+      navigate(from, {
+        state: {
+          message: `${response.data.message}. Please Login`,
+        },
+        replace: true,
+      });
     } catch (err) {
       !err?.response
         ? setError("There is No Server Response")

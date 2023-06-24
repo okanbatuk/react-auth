@@ -25,3 +25,10 @@ body {
   min-height: 100vh;
   padding: 1rem 0.5rem;
 }
+
+.flexGrow {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}

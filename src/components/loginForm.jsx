@@ -51,7 +51,9 @@ export default ({ setErr, errRef }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    email && password && login({ email, password });
+    email && password
+      ? login({ email, password })
+      : (setErr("Invalid Entry.."), errRef.current.focus());
   };
 
   return (
@@ -74,7 +76,11 @@ export default ({ setErr, errRef }) => {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button type="submit" onClick={handleSubmit}>
+      <button
+        type="submit"
+        disabled={email && password ? false : true}
+        onClick={handleSubmit}
+      >
         Sign In
       </button>
     </form>
