@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import useFetch from "../hooks/useFetch";
+import React from "react";
 import Feed from "../components/Feed";
+import useFetchPrivate from "../hooks/useFetchPrivate";
 
 export default () => {
-  const { loading, error } = useFetch("/users");
+  const { loading, error } = useFetchPrivate("/users");
 
   return (
     <article>

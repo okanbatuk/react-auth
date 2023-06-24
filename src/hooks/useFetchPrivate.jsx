@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
-import api from "../libs/api";
+import useAxiosPrivate from "./useAxiosPrivate";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default (url) => {
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -11,7 +15,7 @@ export default (url) => {
 
     (async () => {
       try {
-        const { data } = await api(url, {
+        const { data } = await axiosPrivate(url, {
           signal: AbortSignal.timeout(2000),
         });
         mounted && setData(data?.data?.users);
