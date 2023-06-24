@@ -10,7 +10,9 @@ const Admin = () => {
     <section>
       <h1>Admins Page</h1>
       <br />
-      <Users />
+      <div style={{ marginLeft: "1rem" }}>
+        <Users />
+      </div>
       <br />
       <div className="flexGrow">
         <Link to="/">Home</Link>
