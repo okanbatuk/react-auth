@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "./useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
+import useAuth from "./useAuth";
 
 export default (url) => {
+  const { setAuth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,6 +26,7 @@ export default (url) => {
           ? setError("Server not found")
           : setError(err.response.data.message);
 
+        setAuth({});
         navigate("/login", {
           state: {
             from: location,
