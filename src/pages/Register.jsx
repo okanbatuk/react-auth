@@ -1,11 +1,21 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Form from "../components/registerForm";
 import "../assets/registerForm.css";
+import useAuth from "../hooks/useAuth";
 
 export default () => {
+  const { auth } = useAuth();
+  const navigate = useNavigate();
   const errRef = useRef();
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    auth?.accessToken &&
+      navigate("/", {
+        state: { message: "Please log out before going to Register Page." },
+      });
+  }, []);
 
   return (
     <section>

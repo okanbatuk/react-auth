@@ -6,7 +6,7 @@ const Admin = () => {
   const { auth } = useAuth();
   const location = useLocation();
 
-  return auth?.roles === "admin" ? (
+  return auth?.user?.roles === "admin" ? (
     <section>
       <h1>Admins Page</h1>
       <br />

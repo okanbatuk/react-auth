@@ -6,9 +6,13 @@ export default () => {
   const { auth } = useAuth();
   const location = useLocation();
 
-  return Object.keys(auth).length ? (
+  return auth?.accessToken ? (
     <Outlet />
   ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
+    <Navigate
+      to="/login"
+      state={{ from: location, message: "Please login.." }}
+      replace
+    />
   );
 };
