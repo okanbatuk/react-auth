@@ -8,6 +8,7 @@ import Admin from "./pages/Admin";
 import Missing from "./pages/Missing";
 import Unauthorized from "./pages/Unauthorized";
 import RequireAuth from "./components/RequireAuth";
+import PersistLogin from "./components/PersistLogin";
 
 function App() {
   return (
@@ -20,11 +21,12 @@ function App() {
         <Route path="unauthorized" element={<Unauthorized />} />
 
         {/* we want to protect these routes */}
-        <Route element={<RequireAuth />}>
-          <Route path="/" element={<Home />} />
-          <Route path="admin" element={<Admin />} />
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth />}>
+            <Route path="/" element={<Home />} />
+            <Route path="admin" element={<Admin />} />
+          </Route>
         </Route>
-
         {/* catch all */}
         <Route path="*" element={<Missing />} />
       </Route>
