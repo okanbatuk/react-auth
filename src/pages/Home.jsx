@@ -1,26 +1,18 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../context/AuthProvider";
 import api from "../libs/api";
-
-const LOGOUT_URL = "/logout";
+import useAuth from "../hooks/useAuth";
+import useLogout from "../hooks/useLogout";
 
 const Home = () => {
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth } = useAuth();
+  const logout = useLogout();
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const logout = async () => {
+  const signOut = async () => {
     // if used in more components, this should be in context
-    try {
-      const response = await api.get(LOGOUT_URL);
-      setAuth({});
-      navigate("/linkpage", { state: { message: response.data.message } });
-    } catch (err) {
-      !err?.response
-        ? console.log("There is No Server Response")
-        : console.log(err.response.data.message);
-    }
+    await logout();
+    navigate("/linkpage", { state: { message: "Logged out successfully.." } });
   };
 
   return (
@@ -36,7 +28,7 @@ const Home = () => {
       <br />
       <Link to="/linkpage">Go to the link page</Link>
       <div className="flexGrow">
-        <button onClick={logout}>Sign Out</button>
+        <button onClick={signOut}>Sign Out</button>
       </div>
     </section>
   );

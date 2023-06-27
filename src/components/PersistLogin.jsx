@@ -9,6 +9,7 @@ export default () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
     const verifyToken = async () => {
       try {
         await refresh();
@@ -18,9 +19,12 @@ export default () => {
     };
     !auth?.accessToken && persist && verifyToken();
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
+    mounted &&
+      setTimeout(() => {
+        setLoading(false);
+      }, 100);
+
+    return () => (mounted = false);
   }, []);
 
   return <>{!persist ? <Outlet /> : loading ? <p>Loading..</p> : <Outlet />}</>;
