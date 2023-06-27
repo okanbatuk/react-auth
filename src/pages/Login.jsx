@@ -17,7 +17,11 @@ export default () => {
   }, []);
 
   useEffect(() => {
+    // redirect to login page with message and show the message
     state?.message && setErr(state.message) && errRef.current.focus();
+
+    // State changed to null after set the error
+    window.history.replaceState({}, document.title);
   }, [state?.message]);
 
   return (
