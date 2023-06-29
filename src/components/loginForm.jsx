@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../libs/api";
 import useAuth from "../hooks/useAuth";
+import useLocalInput from "../hooks/useLocalInput";
 
 export default ({ setErr, errRef }) => {
   const { setAuth, persist, setPersist } = useAuth();
@@ -11,7 +12,7 @@ export default ({ setErr, errRef }) => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useLocalInput("loginEmail", "");
   const [password, setPassword] = useState("");
 
   useEffect(() => {

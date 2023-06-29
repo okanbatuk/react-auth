@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../libs/api";
+import useLocalInput from "../hooks/useLocalInput";
 
 const NAME_REGEX = /^[A-z][A-z ]{2,23}$/;
 const MAIL_REGEX =
@@ -19,9 +20,9 @@ export default ({ setError, errRef }) => {
   const navigate = useNavigate();
   const from = "/linkpage";
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useLocalInput("regFirstName", "");
+  const [lastName, setLastName] = useLocalInput("regLastName", "");
+  const [email, setEmail] = useLocalInput("regEmail", "");
   const [password, setPassword] = useState("");
   const [matchPass, setMatchPass] = useState("");
 
