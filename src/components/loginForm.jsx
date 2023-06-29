@@ -27,12 +27,16 @@ export default ({ setErr, errRef }) => {
     localStorage.setItem("persist", persist);
   }, [persist]);
 
-  const login = async (email, password) => {
+  const login = async () => {
     try {
-      const { data } = await api.post("/login", email, password, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const { data } = await api.post(
+        "/login",
+        { email, password },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
       const { user, accessToken } = data?.data;
       setAuth({
         user: {
@@ -65,7 +69,7 @@ export default ({ setErr, errRef }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     email && password
-      ? login({ email, password })
+      ? login()
       : (setErr("Invalid Entry.."), errRef.current.focus());
   };
 
