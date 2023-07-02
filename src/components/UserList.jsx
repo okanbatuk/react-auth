@@ -4,8 +4,8 @@ import LineUser from "./LineUser";
 export default ({ users }) => {
   return (
     <ul>
-      {users.map((user) => (
-        <LineUser key={user.uuid} user={user} />
+      {users.map((user, index) => (
+        <LineUser key={index} user={user} />
       ))}
     </ul>
   );

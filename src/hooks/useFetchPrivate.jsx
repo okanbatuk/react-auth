@@ -1,13 +1,8 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "./useAxiosPrivate";
-import { useNavigate, useLocation } from "react-router-dom";
-import useAuth from "./useAuth";
 
 export default (url) => {
-  const { setAuth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
-  const navigate = useNavigate();
-  const location = useLocation();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,20 +15,14 @@ export default (url) => {
         const { data } = await axiosPrivate(url, {
           signal: AbortSignal.timeout(2000),
         });
-        mounted && setData(data?.data?.users);
+        const users = data.data.users.map(
+          (user) => `${user.firstName} ${user.lastName} - ${user.role}`
+        );
+        mounted && setData(users);
       } catch (err) {
         !err?.response
           ? setError("Server not found")
           : setError(err.response.data.message);
-
-        setAuth({});
-        navigate("/login", {
-          state: {
-            from: location,
-            message: "Something Went Wrong. Please login again..",
-          },
-          replace: true,
-        });
       } finally {
         mounted && setLoading(false);
       }
