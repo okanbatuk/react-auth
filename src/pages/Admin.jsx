@@ -1,4 +1,5 @@
 import { Link, Navigate, useLocation } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 import useAuth from "../hooks/useAuth";
 import Users from "../pages/Users";
 
@@ -6,7 +7,9 @@ const Admin = () => {
   const { auth } = useAuth();
   const location = useLocation();
 
-  return auth?.user?.roles === "admin" ? (
+  const decoded = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined;
+
+  return decoded.roles === "admin" ? (
     <section>
       <h1>Admins Page</h1>
       <br />
