@@ -3,12 +3,14 @@ import { Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useRefresh from "../hooks/useRefresh";
 import useLogout from "../hooks/useLogout";
+import useLocalInput from "../hooks/useLocalInput";
 
 export default () => {
-  const { auth, persist } = useAuth();
+  const { auth } = useAuth();
   const refresh = useRefresh();
   const logout = useLogout();
   const [loading, setLoading] = useState(true);
+  const [persist] = useLocalInput("persist", false);
 
   useEffect(() => {
     let mounted = true;

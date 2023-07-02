@@ -2,18 +2,20 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../libs/api";
 import useAuth from "../hooks/useAuth";
-import useLocalInput from "../hooks/useLocalInput";
+import useInput from "../hooks/useInput";
+import useToggle from "../hooks/useToggle";
 
 export default ({ setErr, errRef }) => {
-  const { setAuth, persist, setPersist } = useAuth();
+  const { setAuth } = useAuth();
   const userRef = useRef();
   const navigate = useNavigate();
 
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const [email, setEmail] = useLocalInput("loginEmail", "");
+  const [email, resetEmail, emailAtt] = useInput("loginEmail", "", 35);
   const [password, setPassword] = useState("");
+  const [toggleAtt] = useToggle("persist");
 
   useEffect(() => {
     userRef.current.focus();
@@ -22,10 +24,6 @@ export default ({ setErr, errRef }) => {
   useEffect(() => {
     (email || password) && setErr("");
   }, [email, password]);
-
-  useEffect(() => {
-    localStorage.setItem("persist", persist);
-  }, [persist]);
 
   const login = async () => {
     try {
@@ -48,7 +46,7 @@ export default ({ setErr, errRef }) => {
         },
         accessToken,
       });
-      setEmail("");
+      resetEmail();
       setPassword("");
       navigate(
         from,
@@ -61,7 +59,7 @@ export default ({ setErr, errRef }) => {
         : setErr(err.response.data.message);
       errRef.current.focus();
     } finally {
-      setEmail("");
+      resetEmail();
       setPassword("");
     }
   };
@@ -73,10 +71,6 @@ export default ({ setErr, errRef }) => {
       : (setErr("Invalid Entry.."), errRef.current.focus());
   };
 
-  const togglePersist = () => {
-    setPersist((prev) => !prev);
-  };
-
   return (
     <form>
       <label htmlFor="email">Email:</label>
@@ -85,8 +79,7 @@ export default ({ setErr, errRef }) => {
         type="text"
         ref={userRef}
         autoComplete="off"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        {...emailAtt}
         required
       />
       <label htmlFor="password">Password:</label>
@@ -105,12 +98,7 @@ export default ({ setErr, errRef }) => {
         Sign In
       </button>
       <div className="persistCheck">
-        <input
-          type="checkbox"
-          id="persist"
-          onChange={togglePersist}
-          checked={persist}
-        />
+        <input type="checkbox" id="persist" {...toggleAtt} />
         <label htmlFor="persist">Trust This Device</label>
       </div>
     </form>

@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../libs/api";
 import useLocalInput from "../hooks/useLocalInput";
+import useInput from "../hooks/useInput";
 
 const NAME_REGEX = /^[A-z][A-z ]{2,23}$/;
 const MAIL_REGEX =
@@ -20,9 +21,12 @@ export default ({ setError, errRef }) => {
   const navigate = useNavigate();
   const from = "/linkpage";
 
-  const [firstName, setFirstName] = useLocalInput("regFirstName", "");
-  const [lastName, setLastName] = useLocalInput("regLastName", "");
-  const [email, setEmail] = useLocalInput("regEmail", "");
+  const [firstName, resetFirstName, firstNameAtt] = useInput(
+    "regFirstName",
+    ""
+  );
+  const [lastName, resetLastName, lastNameAtt] = useInput("regLastName", "");
+  const [email, resetEmail, emailAtt] = useInput("regEmail", "", 35);
   const [password, setPassword] = useState("");
   const [matchPass, setMatchPass] = useState("");
 
@@ -67,9 +71,9 @@ export default ({ setError, errRef }) => {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      setFirstName("");
-      setLastName("");
-      setEmail("");
+      resetFirstName();
+      resetLastName();
+      resetLastName();
       setPassword("");
       setMatchPass("");
       navigate(from, {
@@ -84,9 +88,9 @@ export default ({ setError, errRef }) => {
         : setError(err.response.data.message);
       errRef.current.focus();
     } finally {
-      setFirstName("");
-      setLastName("");
-      setEmail("");
+      resetFirstName();
+      resetLastName();
+      resetLastName();
       setPassword("");
       setMatchPass("");
     }
@@ -119,10 +123,7 @@ export default ({ setError, errRef }) => {
         ref={nameRef}
         autoComplete="off"
         required
-        value={firstName}
-        onChange={(e) => {
-          e.target.value.length < 24 && setFirstName(e.target.value);
-        }}
+        {...firstNameAtt}
         aria-invalid={validName ? "false" : "true"}
         aria-describedby="nameNote"
         onFocus={() => setNameFocus(true)}
@@ -155,10 +156,7 @@ export default ({ setError, errRef }) => {
         id="lastName"
         autoComplete="off"
         required
-        value={lastName}
-        onChange={(e) => {
-          e.target.value.length < 24 && setLastName(e.target.value);
-        }}
+        {...lastNameAtt}
         aria-invalid={validSurname ? "false" : "true"}
         aria-describedby="surnameNote"
         onFocus={() => setSurnameFocus(true)}
@@ -191,8 +189,7 @@ export default ({ setError, errRef }) => {
         id="email"
         autoComplete="off"
         required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        {...emailAtt}
         aria-invalid={validMail ? "false" : "true"}
         aria-describedby="uidnote"
         onFocus={() => setMailFocus(true)}
