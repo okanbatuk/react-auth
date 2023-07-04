@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import UserList from "./UserList";
-import useFetchPrivate from "../hooks/useFetchPrivate";
 
-export default () => {
-  const { data } = useFetchPrivate("/users");
+export default ({ data }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {

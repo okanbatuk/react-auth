@@ -3,7 +3,7 @@ import useLocalInput from "./useLocalInput";
 export default (key, initValue, length = 24) => {
   const [value, setValue] = useLocalInput(key, initValue);
 
-  const reset = () => setValue(initValue);
+  const reset = (newValue) => setValue(newValue);
 
   const attributes = {
     value,

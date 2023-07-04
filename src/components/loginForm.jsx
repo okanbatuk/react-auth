@@ -46,7 +46,7 @@ export default ({ setErr, errRef }) => {
         },
         accessToken,
       });
-      resetEmail();
+      resetEmail("");
       setPassword("");
       navigate(
         from,
@@ -59,7 +59,7 @@ export default ({ setErr, errRef }) => {
         : setErr(err.response.data.message);
       errRef.current.focus();
     } finally {
-      resetEmail();
+      resetEmail("");
       setPassword("");
     }
   };

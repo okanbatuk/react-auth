@@ -70,9 +70,9 @@ export default ({ setError, errRef }) => {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      resetFirstName();
-      resetLastName();
-      resetEmail();
+      resetFirstName("");
+      resetLastName("");
+      resetEmail("");
       setPassword("");
       setMatchPass("");
       navigate(from, {
@@ -87,9 +87,9 @@ export default ({ setError, errRef }) => {
         : setError(err.response.data.message);
       errRef.current.focus();
     } finally {
-      resetFirstName();
-      resetLastName();
-      resetEmail();
+      resetFirstName("");
+      resetLastName("");
+      resetEmail("");
       setPassword("");
       setMatchPass("");
     }

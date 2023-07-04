@@ -3,7 +3,7 @@ import Feed from "../components/Feed";
 import useFetchPrivate from "../hooks/useFetchPrivate";
 
 export default () => {
-  const { loading, error } = useFetchPrivate("/users");
+  const { data, loading, error } = useFetchPrivate("/users");
 
   return (
     <article>
@@ -31,7 +31,7 @@ export default () => {
           Loading..
         </p>
       ) : (
-        <Feed />
+        <Feed data={data} />
       )}
     </article>
   );

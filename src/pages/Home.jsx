@@ -17,10 +17,6 @@ const Home = () => {
     navigate("/linkpage", { state: { message: "Logged out successfully.." } });
   };
 
-  const handleClick = () => {
-    navigate("/update");
-  };
-
   return (
     <section>
       <div className="row">
@@ -28,7 +24,7 @@ const Home = () => {
           <h1>Home</h1>
         </div>
         <div className="column-other">
-          <i onClick={handleClick}>
+          <i onClick={() => navigate("update")}>
             <FontAwesomeIcon icon={faUser} size="2xl" className="userIcon" />
           </i>
         </div>
