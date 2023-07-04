@@ -7,7 +7,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../libs/api";
-import useLocalInput from "../hooks/useLocalInput";
 import useInput from "../hooks/useInput";
 
 const NAME_REGEX = /^[A-z][A-z ]{2,23}$/;
@@ -73,7 +72,7 @@ export default ({ setError, errRef }) => {
       });
       resetFirstName();
       resetLastName();
-      resetLastName();
+      resetEmail();
       setPassword("");
       setMatchPass("");
       navigate(from, {
@@ -90,7 +89,7 @@ export default ({ setError, errRef }) => {
     } finally {
       resetFirstName();
       resetLastName();
-      resetLastName();
+      resetEmail();
       setPassword("");
       setMatchPass("");
     }

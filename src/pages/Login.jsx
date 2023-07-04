@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Form from "../components/loginForm";
-import "../assets/loginForm.css";
 import useAuth from "../hooks/useAuth";
+import "../assets/loginForm.css";
 
 export default () => {
   const { auth } = useAuth();
