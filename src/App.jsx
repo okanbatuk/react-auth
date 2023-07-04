@@ -9,6 +9,7 @@ import Missing from "./pages/Missing";
 import Unauthorized from "./pages/Unauthorized";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
+import UpdateInfo from "./pages/UpdateInfo";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
             <Route path="admin" element={<Admin />} />
+            <Route path="update" element={<UpdateInfo />} />
           </Route>
         </Route>
         {/* catch all */}

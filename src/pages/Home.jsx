@@ -1,7 +1,9 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import api from "../libs/api";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
+import "../assets/homePage.css";
 
 const Home = () => {
   const { auth } = useAuth();
@@ -15,10 +17,22 @@ const Home = () => {
     navigate("/linkpage", { state: { message: "Logged out successfully.." } });
   };
 
+  const handleClick = () => {
+    navigate("/update");
+  };
+
   return (
     <section>
-      <h1>Home</h1>
-
+      <div className="row">
+        <div className="column-main">
+          <h1>Home</h1>
+        </div>
+        <div className="column-other">
+          <i onClick={handleClick}>
+            <FontAwesomeIcon icon={faUser} size="2xl" className="userIcon" />
+          </i>
+        </div>
+      </div>
       <p>
         Hello, {auth.user.firstName} {auth.user.lastName} <br />
         {state && state?.message}
