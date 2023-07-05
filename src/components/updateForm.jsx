@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { omitBy, isEmpty, replace, first } from "lodash";
+import { omitBy, isEmpty } from "lodash";
 import {
   faCheck,
   faTimes,
@@ -14,7 +14,7 @@ const NAME_REGEX = /^[A-z][A-z ]{2,23}$/;
 const MAIL_REGEX =
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-export default ({ data, setMessage, notRef }) => {
+export default ({ userInfo, message, setMessage, notRef }) => {
   const nameRef = useRef();
   const navigate = useNavigate();
   const { auth } = useAuth();
@@ -38,10 +38,10 @@ export default ({ data, setMessage, notRef }) => {
   }, []);
 
   useEffect(() => {
-    data?.firstName && setFirstName(data?.firstName);
-    data?.lastName && setLastName(data?.lastName);
-    data?.email && setEmail(data?.email);
-  }, [data]);
+    userInfo?.firstName && setFirstName(userInfo.firstName);
+    userInfo?.lastName && setLastName(userInfo.lastName);
+    userInfo?.email && setEmail(userInfo.email);
+  }, [userInfo]);
 
   useEffect(() => {
     setValidName(NAME_REGEX.test(firstName));
@@ -50,7 +50,7 @@ export default ({ data, setMessage, notRef }) => {
   }, [firstName, lastName, email]);
 
   useEffect(() => {
-    (firstName || lastName || email) && setMessage("");
+    (firstName || lastName || email) && message && setMessage("");
   }, [firstName, lastName, email]);
 
   const update = async () => {
@@ -71,7 +71,9 @@ export default ({ data, setMessage, notRef }) => {
         ? setMessage({ err: true, content: "Server not found" })
         : setMessage({ err: true, content: err.response.data.message });
     } finally {
-      notRef.current.focus();
+      setTimeout(() => {
+        notRef.current.focus();
+      }, 10);
     }
   };
 

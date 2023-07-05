@@ -15,10 +15,7 @@ export default (url) => {
         const { data } = await axiosPrivate(url, {
           signal: AbortSignal.timeout(2000),
         });
-        const users = data.data.users.map(
-          (user) => `${user.firstName} ${user.lastName} - ${user.role}`
-        );
-        mounted && setData(users);
+        mounted && setData(data);
       } catch (err) {
         !err?.response
           ? setError("Server not found")

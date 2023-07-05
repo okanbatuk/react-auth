@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Feed from "../components/Feed";
 import useFetchPrivate from "../hooks/useFetchPrivate";
 
 export default () => {
   const { data, loading, error } = useFetchPrivate("/users");
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const userList = data?.data?.users.map(
+      (user) => `${user.firstName} ${user.lastName} - ${user.role}`
+    );
+    setUsers(userList);
+  }, [data]);
 
   return (
     <article>
@@ -31,7 +39,7 @@ export default () => {
           Loading..
         </p>
       ) : (
-        <Feed data={data} />
+        <Feed users={users} />
       )}
     </article>
   );

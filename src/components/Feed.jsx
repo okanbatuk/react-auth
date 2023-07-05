@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import UserList from "./UserList";
 
-export default ({ data }) => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    setUsers(data);
-  }, [data]);
-
+export default ({ users }) => {
   return (
     <>
-      {users.length ? (
+      {users?.length ? (
         <UserList users={users} />
       ) : (
         <p
