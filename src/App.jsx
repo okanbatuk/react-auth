@@ -10,6 +10,7 @@ import Unauthorized from "./pages/Unauthorized";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
 import UpdateInfo from "./pages/UpdateInfo";
+import UpdatePassword from "./pages/UpdatePassword";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
             <Route path="admin" element={<Admin />} />
-            <Route path="update" element={<UpdateInfo />} />
+            <Route exact path="update" element={<UpdateInfo />} />
+            <Route path="update/password" element={<UpdatePassword />} />
           </Route>
         </Route>
         {/* catch all */}

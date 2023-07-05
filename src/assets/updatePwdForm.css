@@ -38,26 +38,6 @@ form {
   margin-bottom: 0.5rem;
 }
 
-.row {
-  width: 100%;
-  display: inline;
-}
-
-.main-column {
-  float: left;
-  width: 60%;
-}
-
-.other-column {
-  float: right;
-  width: 10%;
-}
-
-.pwdIcon:hover {
-  cursor: pointer;
-  color: lightgreen;
-}
-
 .instructions {
   font-size: 0.75rem;
   border-radius: 0.5rem;
