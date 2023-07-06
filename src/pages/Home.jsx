@@ -24,9 +24,12 @@ const Home = () => {
           <h1>Home</h1>
         </div>
         <div className="column-other">
-          <i onClick={() => navigate("update")}>
-            <FontAwesomeIcon icon={faUser} size="2xl" className="userIcon" />
-          </i>
+          <FontAwesomeIcon
+            icon={faUser}
+            size="2xl"
+            className="userIcon"
+            onClick={() => navigate("update")}
+          />
         </div>
       </div>
       <p>

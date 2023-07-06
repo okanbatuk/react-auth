@@ -50,7 +50,7 @@ export default ({ userInfo, message, setMessage, notRef }) => {
   }, [firstName, lastName, email]);
 
   useEffect(() => {
-    (firstName || lastName || email) && message && setMessage("");
+    (firstName || lastName || email) && message && setMessage(null);
   }, [firstName, lastName, email]);
 
   const update = async () => {
