@@ -6,11 +6,15 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAuth from "../hooks/useAuth";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$/;
 
-export default ({ setMessage, notRef }) => {
+export default ({ message, setMessage, notRef }) => {
   const currRef = useRef();
+  const { auth } = useAuth();
+  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const [currPassword, setCurrPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -31,16 +35,35 @@ export default ({ setMessage, notRef }) => {
   }, [newPassword, matchPass]);
 
   useEffect(() => {
-    (currPassword || newPassword || matchPass) && setMessage(null);
+    (currPassword || newPassword || matchPass) && message && setMessage(null);
   }, [currPassword, newPassword, matchPass]);
 
-  const updatePwd = () => {
-    console.log("object");
+  const updatePwd = async () => {
+    try {
+      const response = await axiosPrivate.post(
+        `/users/update-password/${auth?.user?.uuid}`,
+        { password: currPassword, newPassword: newPassword },
+        { signal: AbortSignal.timeout(2000) }
+      );
+      setMessage({ err: false, content: response?.data?.message });
+    } catch (err) {
+      console.log(err);
+      !err?.response
+        ? setMessage({ err: true, content: "Server not found" })
+        : setMessage({ err: true, content: err.response.data.message });
+    } finally {
+      setCurrPassword("");
+      setNewPassword("");
+      setMatchPass("");
+      setTimeout(() => {
+        notRef.current.focus();
+      }, 100);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    currPassword && newPassword && matchPass
+    currPassword && newPassword && matchPass && validPass && validMatch
       ? updatePwd()
       : (setMessage({ err: true, content: "Invalid Entry" }),
         notRef.current.focus());

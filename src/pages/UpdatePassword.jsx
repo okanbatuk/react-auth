@@ -18,7 +18,7 @@ export default () => {
         </p>
       )}
       <h1>Update Password</h1>
-      <Form setMessage={setMessage} notRef={notRef} />
+      <Form message={message} setMessage={setMessage} notRef={notRef} />
     </section>
   );
 };
