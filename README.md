@@ -11,6 +11,7 @@ Tutorial React project with identity authorization and verification. Also added 
 * Save inputs => Localstorage
 * Icons => fontawesome
 * Other => Lodash
+* API => [node-auth](https://github.com/okanbatuk/node-auth)
 
 
 ## Lessons Learned
