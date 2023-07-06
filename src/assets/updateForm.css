@@ -48,6 +48,12 @@ form {
   width: 60%;
 }
 
+.buttons-column {
+  float: right;
+  width: 15%;
+  margin-right: 10%;
+}
+
 .other-column {
   float: right;
   width: 10%;
@@ -56,6 +62,33 @@ form {
 .pwdIcon:hover {
   cursor: pointer;
   color: lightgreen;
+}
+
+.deleteUserIcon:hover {
+  cursor: pointer;
+  color: lightcoral;
+}
+
+.main-button {
+  float: left;
+  width: 10%;
+}
+
+.btnUserDelete {
+  color: #fff;
+}
+
+.btnUserDelete:hover {
+  cursor: pointer;
+}
+
+.btnCancelDelete:hover {
+  cursor: pointer;
+}
+
+.other-button {
+  float: right;
+  width: 10%;
 }
 
 .instructions {
